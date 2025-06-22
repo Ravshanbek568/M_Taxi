@@ -11,24 +11,24 @@ class PaymentCardRegistrationScreen extends StatefulWidget {
 
 class _PaymentCardRegistrationScreenState extends State<PaymentCardRegistrationScreen> {
   // TextField controllerlari
-  final TextEditingController _cardNumberController = TextEditingController(); // Karta raqami uchun
-  final TextEditingController _expiryMonthController = TextEditingController(); // Oy uchun (MM)
-  final TextEditingController _expiryYearController = TextEditingController(); // Yil uchun (YYYY)
-  final TextEditingController _cvvController = TextEditingController(); // CVV kodi uchun
+  final TextEditingController _cardNumberController = TextEditingController(); // Karta raqami uchun controller
+  final TextEditingController _expiryMonthController = TextEditingController(); // Oy uchun controller (MM formatda)
+  final TextEditingController _expiryYearController = TextEditingController(); // Yil uchun controller (YYYY formatda)
+  final TextEditingController _cvvController = TextEditingController(); // CVV kodi uchun controller
 
   // UI holatlari
-  String _selectedCardType = ''; // Tanlangan karta turi (humo, uzcard, visa)
-  bool _isCvvVisible = false; // CVV ko'rinadimi yoki yo'q
-  bool _isExpiryValid = true; // Karta muddati amal qiladimi
+  String _selectedCardType = ''; // Tanlangan karta turi (humo, uzcard, visa, mastercard)
+  bool _isCvvVisible = false; // CVV kodini ko'rsatish/yashirish holati
+  bool _isExpiryValid = true; // Karta amal qilish muddati yaroqli/yaroqsizligi
 
   @override
   void initState() {
     super.initState();
     // Controllerlarga listenerlar qo'shamiz
-    _cardNumberController.addListener(_formatCardNumber); // Karta raqamini formatlash
-    _expiryMonthController.addListener(_checkExpiry); // Muddatni tekshirish
-    _expiryYearController.addListener(_checkExpiry); // Muddatni tekshirish
-    _cvvController.addListener(_handleCvvVisibility); // CVV ko'rinishini boshqarish
+    _cardNumberController.addListener(_formatCardNumber); // Karta raqamini formatlash uchun listener
+    _expiryMonthController.addListener(_checkExpiry); // Amal qilish muddatini tekshirish uchun listener
+    _expiryYearController.addListener(_checkExpiry); // Amal qilish muddatini tekshirish uchun listener
+    _cvvController.addListener(_handleCvvVisibility); // CVV ko'rinishini boshqarish uchun listener
   }
 
   @override
@@ -49,7 +49,7 @@ class _PaymentCardRegistrationScreenState extends State<PaymentCardRegistrationS
 
   // Karta raqamini 4-4-4-4 formatiga keltiradi
   void _formatCardNumber() {
-    // Faqat raqamlarni qoldiradi
+    // Faqat raqamlarni qoldiradi (boshqa belgilarni olib tashlaydi)
     final text = _cardNumberController.text.replaceAll(RegExp(r'[^0-9]'), '');
     final newText = StringBuffer();
 
@@ -67,7 +67,7 @@ class _PaymentCardRegistrationScreenState extends State<PaymentCardRegistrationS
       );
     }
 
-    _determineCardType(text); // Karta turini aniqlash
+    _determineCardType(text); // Karta turini aniqlash funksiyasini chaqiramiz
   }
 
   // Karta raqamiga qarab turini aniqlaymiz
@@ -89,8 +89,8 @@ class _PaymentCardRegistrationScreenState extends State<PaymentCardRegistrationS
   void _checkExpiry() {
     if (_expiryMonthController.text.length == 2 && _expiryYearController.text.length == 4) {
       final now = DateTime.now(); // Joriy sana
-      final month = int.tryParse(_expiryMonthController.text) ?? 0; // Oy
-      final year = int.tryParse(_expiryYearController.text) ?? 0; // Yil
+      final month = int.tryParse(_expiryMonthController.text) ?? 0; // Oy raqami
+      final year = int.tryParse(_expiryYearController.text) ?? 0; // Yil raqami
       
       // Muddat o'tganligini tekshiramiz
       final isExpired = year < now.year || (year == now.year && month < now.month);
@@ -99,7 +99,7 @@ class _PaymentCardRegistrationScreenState extends State<PaymentCardRegistrationS
     }
   }
 
-  // CVV kodini 3 soniyagina ko'rsatamiz
+  // CVV kodini 1 soniyagina ko'rsatamiz
   void _handleCvvVisibility() {
     if (_cvvController.text.isNotEmpty) {
       setState(() => _isCvvVisible = true); // Ko'rsatamiz
@@ -113,7 +113,7 @@ class _PaymentCardRegistrationScreenState extends State<PaymentCardRegistrationS
 
   // Tasdiqlash tugmasi bosilganda
   void _onConfirmPressed() {
-    // Karta raqami validatsiyasi
+    // Karta raqami validatsiyasi (16 ta raqam bo'lishi kerak)
     if (_cardNumberController.text.replaceAll(' ', '').length != 16) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Karta raqami noto\'g\'ri kiritilgan')),
@@ -137,7 +137,7 @@ class _PaymentCardRegistrationScreenState extends State<PaymentCardRegistrationS
       return;
     }
 
-    // CVV kodini tekshiramiz
+    // CVV kodini tekshiramiz (3 ta raqam bo'lishi kerak)
     if (_cvvController.text.length != 3) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('CVV kodi noto\'g\'ri kiritilgan')),
@@ -151,13 +151,13 @@ class _PaymentCardRegistrationScreenState extends State<PaymentCardRegistrationS
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF92CAFE), // Moviy fon rangi
+      backgroundColor: const Color(0xFF92CAFE), // Asosiy fon rangi (moviy)
       appBar: AppBar(
         backgroundColor: Colors.transparent, // Shaffof appbar
         elevation: 0, // Soyasiz
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white), // Orqaga tugmasi
-          onPressed: () => Navigator.pop(context), // Orqaga qaytish
+          onPressed: () => Navigator.pop(context), // Orqaga qaytish funktsiyasi
         ),
       ),
       body: SingleChildScrollView(
@@ -175,7 +175,7 @@ class _PaymentCardRegistrationScreenState extends State<PaymentCardRegistrationS
             ),
             const SizedBox(height: 10),
             
-            // Qo'shimcha yo'riqnoma
+            // Qo'shimcha yo'riqnoma matni
             const Text(
               'Karta ma\'lumotlarini kiriting',
               style: TextStyle(
@@ -210,40 +210,57 @@ class _PaymentCardRegistrationScreenState extends State<PaymentCardRegistrationS
                   const SizedBox(height: 5),
                   SizedBox(
                     height: 50,
-                    child: Stack( // Stack widgeti (children bilan ishlatiladi)
+                    child: Stack( // Stack widgeti - elementlarni ustma-ust joylash uchun
                       children: [
                         // Karta raqami input maydoni
-                        TextField(
-                          controller: _cardNumberController,
-                          keyboardType: TextInputType.number, // Raqamli klaviatura
-                          maxLength: 19, // 16 raqam + 3 probel
-                          decoration: InputDecoration(
-                            filled: true,
-                            fillColor: Colors.white, // Oq fon
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20), // Yumaloq burchaklar
-                              borderSide: BorderSide.none, // Chegara yo'q
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white, // Oq fon
+                            borderRadius: BorderRadius.circular(20), // Yumaloq burchaklar
+                          ),
+                          child: TextField(
+                            controller: _cardNumberController,
+                            keyboardType: TextInputType.number, // Raqamli klaviatura
+                            maxLength: 19, // 16 raqam + 3 probel
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Colors.transparent, // Shaffof fon
+                              border: InputBorder.none, // Chegara yo'q
+                              hintText: '0000 0000 0000 0000', // Namuna matn
+                              contentPadding: const EdgeInsets.only(
+                                left: 115, // Karta logosi uchun joy
+                                right: 15,
+                                top: 15,
+                                bottom: 12,
+                              ),
+                              counterText: '', // Hisoblagichni olib tashlash
                             ),
-                            hintText: '0000 0000 0000 0000', // Namuna matn
-                            contentPadding: const EdgeInsets.only(
-                              left: 110, // Karta logosi uchun joy
-                              right: 20,
-                              top: 15,
-                              bottom: 15,
+                          ),
+                        ),
+                        
+                        // Karta logosi uchun fon
+                        Positioned(
+                          left: 0,
+                          top: 0,
+                          bottom: 0,
+                          child: Container(
+                            width: 85,
+                            decoration: BoxDecoration(
+                              color: const Color.fromARGB(255, 176, 218, 178), // Karta logosi uchun fon rangi
+                              borderRadius: BorderRadius.circular(15), // Yumaloq burchaklar
                             ),
-                            counterText: '', // Hisoblagichni olib tashlash
                           ),
                         ),
                         
                         // Karta logosi (agar tanlangan bo'lsa)
                         if (_selectedCardType.isNotEmpty)
                           Positioned(
-                            left: 30,
-                            top: 3,
+                            left: 12,
+                            top: -5,
                             child: Image.asset(
                               'assets/images/${_selectedCardType}_logo.png',
-                              width: 45,
-                              height: 45,
+                              width: 60,
+                              height: 60,
                             ),
                           ),
                       ],
@@ -263,6 +280,7 @@ class _PaymentCardRegistrationScreenState extends State<PaymentCardRegistrationS
                     children: [
                       // Amal qilish muddati maydoni
                       Expanded(
+                        flex: 3, // Kenglikni oshirish uchun flex qiymatini oshirdik
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -278,24 +296,30 @@ class _PaymentCardRegistrationScreenState extends State<PaymentCardRegistrationS
                               children: [
                                 // Oy maydoni (MM)
                                 Expanded(
-                                  flex: 1,
-                                  child: TextField(
-                                    controller: _expiryMonthController,
-                                    keyboardType: TextInputType.number,
-                                    maxLength: 2, // 2 ta belgi
-                                    decoration: _buildExpiryDecoration('MM'), // Hint
+                                  flex: 2, // Oy maydoni uchun kengroq joy
+                                  child: SizedBox(
+                                    // height: 40, // Balandlikni kamaytirish
+                                    child: TextField(
+                                      controller: _expiryMonthController,
+                                      keyboardType: TextInputType.number,
+                                      maxLength: 2, // 2 ta belgi
+                                      decoration: _buildExpiryDecoration('MM', isMonth: true), // Hint
+                                    ),
                                   ),
                                 ),
                                 const SizedBox(width: 10),
                                 
                                 // Yil maydoni (YYYY)
                                 Expanded(
-                                  flex: 2,
-                                  child: TextField(
-                                    controller: _expiryYearController,
-                                    keyboardType: TextInputType.number,
-                                    maxLength: 4, // 4 ta belgi
-                                    decoration: _buildExpiryDecoration('YYYY'), // Hint
+                                  flex: 3, // Yil maydoni uchun kengroq joy
+                                  child: SizedBox(
+                                    // height: 40, // Balandlikni kamaytirish
+                                    child: TextField(
+                                      controller: _expiryYearController,
+                                      keyboardType: TextInputType.number,
+                                      maxLength: 4, // 4 ta belgi
+                                      decoration: _buildExpiryDecoration('YYYY'), // Hint
+                                    ),
                                   ),
                                 ),
                               ],
@@ -318,8 +342,9 @@ class _PaymentCardRegistrationScreenState extends State<PaymentCardRegistrationS
                       
                       const SizedBox(width: 20),
                       
-                      // CVV maydoni
+                      // CVV maydoni (kichikroq qilish uchun)
                       Expanded(
+                        flex: 2, // Kenglikni kamaytirish
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -331,30 +356,38 @@ class _PaymentCardRegistrationScreenState extends State<PaymentCardRegistrationS
                               ),
                             ),
                             const SizedBox(height: 5),
-                            Stack( // Stack widgeti (children bilan ishlatiladi)
-                              alignment: Alignment.centerRight, // Tugmani o'ngga joylash
-                              children: [
-                                // CVV input maydoni
-                                TextField(
-                                  controller: _cvvController,
-                                  keyboardType: TextInputType.number,
-                                  maxLength: 3, // 3 ta belgi
-                                  obscureText: !_isCvvVisible, // Yashirish holati
-                                  decoration: _buildExpiryDecoration('***'), // Hint
-                                ),
-                                // Ko'z tugmasi
-                                IconButton(
-                                  icon: Icon(
-                                    _isCvvVisible 
-                                      ? Icons.visibility_off 
-                                      : Icons.visibility,
-                                    color: Colors.grey,
+                            SizedBox(
+                              // height: 40, // Balandlikni kamaytirish
+                              child: Stack(
+                                alignment: Alignment.centerRight,
+                                children: [
+                                  // CVV input maydoni
+                                  TextField(
+                                    controller: _cvvController,
+                                    keyboardType: TextInputType.number,
+                                    maxLength: 3, // 3 ta belgi
+                                    obscureText: !_isCvvVisible, // Yashirish holati
+                                    decoration: _buildExpiryDecoration('***'), // Hint
                                   ),
-                                  onPressed: () {
-                                    setState(() => _isCvvVisible = !_isCvvVisible);
-                                  },
-                                ),
-                              ],
+                                  // Ko'z tugmasi
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 8.0),
+                                    child: IconButton(
+                                      padding: EdgeInsets.zero, // Paddingni olib tashlash
+                                      iconSize: 20, // Icon o'lchamini kichiklashtirish
+                                      icon: Icon(
+                                        _isCvvVisible 
+                                          ? Icons.visibility_off 
+                                          : Icons.visibility,
+                                        color: Colors.grey,
+                                      ),
+                                      onPressed: () {
+                                        setState(() => _isCvvVisible = !_isCvvVisible);
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
                         ),
@@ -376,7 +409,7 @@ class _PaymentCardRegistrationScreenState extends State<PaymentCardRegistrationS
                   foregroundColor: AppColors.txtColor, // Matn rangi 
                   minimumSize: const Size(double.infinity, 50), // Kenglik
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20), // Yumaloq burchaklar
+                    borderRadius: BorderRadius.circular(24), // Yumaloq burchaklar
                   ),
                 ),
                 child: const Text(
@@ -395,7 +428,7 @@ class _PaymentCardRegistrationScreenState extends State<PaymentCardRegistrationS
   }
 
   // Input maydonlari uchun umumiy bezak
-  InputDecoration _buildExpiryDecoration(String hint) {
+  InputDecoration _buildExpiryDecoration(String hint, {bool isMonth = false}) {
     return InputDecoration(
       filled: true,
       fillColor: Colors.white, // Oq fon
@@ -404,11 +437,13 @@ class _PaymentCardRegistrationScreenState extends State<PaymentCardRegistrationS
         borderSide: BorderSide.none, // Chegara yo'q
       ),
       hintText: hint, // Ko'rsatkich matni
-      contentPadding: const EdgeInsets.symmetric(
-        horizontal: 20,
-        vertical: 15,
-      ),
+      contentPadding: isMonth 
+          ? const EdgeInsets.symmetric(horizontal: 15, vertical: 10) // Oy maydoni uchun kengroq padding
+          : const EdgeInsets.symmetric(horizontal: 20, vertical: 10), // Vertikal paddingni kamaytirish
       counterText: '', // Hisoblagichni olib tashlash
+      hintStyle: TextStyle(
+        fontSize: isMonth ? 14 : null, // Oy maydoni uchun kattaroq shrift
+      ),
     );
   }
 }
