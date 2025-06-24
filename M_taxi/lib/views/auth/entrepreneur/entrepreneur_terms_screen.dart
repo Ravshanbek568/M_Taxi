@@ -66,7 +66,7 @@ class _EntrepreneurTermsScreenState extends State<EntrepreneurTermsScreen> {
               const SizedBox(height: 15),
               Container(
                 width: 340,
-                padding: const EdgeInsets.all(40),
+                padding: const EdgeInsets.all(20), // Paddingni kamaytirdik
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(15),
@@ -127,40 +127,38 @@ class _EntrepreneurTermsScreenState extends State<EntrepreneurTermsScreen> {
   }
 
   Widget _buildTermItem(String text, bool value, Function(bool) onChanged) {
-    return SizedBox(
-      width: 250,
-      child: Row(
-        children: [
-          // Checkbox
-          GestureDetector(
-            onTap: () => onChanged(!value),
-            child: Container(
-              width: 34,
-              height: 34,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(color: AppColors.txtColor, width: 2),
-                color: value ? AppColors.txtColor : Colors.white,
-              ),
-              child: value
-                  ? const Icon(Icons.check, size: 16, color: Colors.white)
-                  : null,
+    return Row(
+      children: [
+        // Checkbox
+        GestureDetector(
+          onTap: () => onChanged(!value),
+          child: Container(
+            width: 34,
+            height: 34,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(color: AppColors.txtColor, width: 2),
+              color: value ? AppColors.txtColor : Colors.white,
+            ),
+            child: value
+                ? const Icon(Icons.check, size: 16, color: Colors.white)
+                : null,
+          ),
+        ),
+        
+        // Matn
+        const SizedBox(width: 35),
+        Expanded(
+          child: Text(
+            text,
+            style: const TextStyle(
+              fontSize: 16, // Font hajmini oshirdik
+              color: Colors.black,
+              fontWeight: FontWeight.w500, // Matnni qalinroq qildik
             ),
           ),
-          
-          // Matn
-          const SizedBox(width: 15),
-          Expanded(
-            child: Text(
-              text,
-              style: const TextStyle(
-                fontSize: 14,
-                color: Colors.black,
-              ),
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
