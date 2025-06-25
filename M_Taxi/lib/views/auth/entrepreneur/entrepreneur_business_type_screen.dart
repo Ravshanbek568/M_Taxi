@@ -30,9 +30,9 @@ class EntrepreneurBusinessTypeScreen extends StatelessWidget {
             left: 0,
             right: 0,
             child: SizedBox(
-              height: MediaQuery.of(context).size.height * 0.5,
+              height: MediaQuery.of(context).size.height * 0.55,
               child: Image.asset(
-                'assets/images/rasm7.png',
+                'assets/images/rasm8.png',
                 fit: BoxFit.cover,
                 width: double.infinity,
               ),
@@ -41,11 +41,11 @@ class EntrepreneurBusinessTypeScreen extends StatelessWidget {
           
           // Top selection panel (50% height)
           Positioned(
-            top: 0,
+            top: 5,
             left: 0,
             right: 0,
             child: SizedBox(
-              height: MediaQuery.of(context).size.height * 0.5,
+              height: MediaQuery.of(context).size.height * 0.55,
               child: Center(
                 child: Container(
                   width: 316,
