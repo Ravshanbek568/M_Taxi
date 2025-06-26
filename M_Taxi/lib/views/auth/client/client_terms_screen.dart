@@ -52,7 +52,7 @@ class _ClientTermsScreenState extends State<ClientTermsScreen> {
             children: [
               // Ilova logotipi
               Image.asset(
-                'assets/images/client_logo.png',
+                'assets/images/rasm7.png',
                 width: 386,
                 height: 220,
               ),
@@ -80,7 +80,7 @@ class _ClientTermsScreenState extends State<ClientTermsScreen> {
                 child: Column(
                   children: [
                     _buildTermItem(
-                      "Xizmat ko'rsatish qoidalarini tasdiqlash",
+                      "Xizmatlardan foydalanish qoidalarini tasdiqlash",
                       _termsAccepted,
                       (value) => setState(() => _termsAccepted = value),
                     ),

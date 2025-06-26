@@ -275,7 +275,7 @@ class _ClientPaymentCardScreenState extends State<ClientPaymentCardScreen> {
             
             // Qo'shimcha yo'riqnoma matni
             const Text(
-              'Haydovchilar sizga to\'lov qilishi uchun',
+              'To\'lovlarni amalga oshirish uchun',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 18,
@@ -285,7 +285,7 @@ class _ClientPaymentCardScreenState extends State<ClientPaymentCardScreen> {
             
             // Karta rasmi
             Image.asset(
-              'assets/images/client_card.png',
+              'assets/images/rasm6.png',
               width: 220,
               height: 220,
               fit: BoxFit.contain, // Rasmni moslashtirish
