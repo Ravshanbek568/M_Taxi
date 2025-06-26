@@ -191,7 +191,7 @@ class _ClientProfileScreenState extends State<ClientProfileScreen> {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.white,
-                  foregroundColor: AppColors.primaryColor,
+                  foregroundColor: AppColors.txtColor,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(24),
                   ),
@@ -202,7 +202,7 @@ class _ClientProfileScreenState extends State<ClientProfileScreen> {
                 } : null,
                 child: const Text(
                   "Tasdiqlash",
-                  style: TextStyle(fontSize: 16),
+                  style: TextStyle(fontSize: 20),
                 ),
               ),
             ),
