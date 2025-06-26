@@ -27,7 +27,7 @@ class _ClientTermsScreenState extends State<ClientTermsScreen> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => const ClientTermsScreen
+        builder: (context) => const ClientHomeScreen(),
       ),
     );
   }
