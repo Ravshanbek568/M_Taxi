@@ -3,11 +3,11 @@ import 'package:m_taksi/core/theme/colors.dart';
 import 'package:m_taksi/views/auth/entrepreneur/entrepreneur_phone_screen.dart';
 
 class EntrepreneurBusinessTypeScreen extends StatelessWidget {
-  // Make the list static const to fix const constructor issue
+  // Biznes turlari ro'yxati (const qiymat sifatida)
   static const List<String> businessTypes = [
-    "Mahaliy taksi haydovchisi",
+    "Mahaliy taksi ",
     "Do'kondor",
-    "Yuk tashuvchi avto'mobil",
+    "Yuk tashuvchi Taksi",
     "Sartarosh",
     "Shaharlararo taksi",
     "Hunarmand usta",
@@ -15,7 +15,6 @@ class EntrepreneurBusinessTypeScreen extends StatelessWidget {
     "Xo'jalik molari",
   ];
 
-  // Use super.key syntax
   const EntrepreneurBusinessTypeScreen({super.key});
 
   @override
@@ -24,7 +23,7 @@ class EntrepreneurBusinessTypeScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       body: Stack(
         children: [
-          // Bottom image (50% height)
+          // Pastki qismdagi rasm (55% balandlikda)
           Positioned(
             bottom: 0,
             left: 0,
@@ -39,26 +38,25 @@ class EntrepreneurBusinessTypeScreen extends StatelessWidget {
             ),
           ),
           
-          // Top selection panel (50% height)
+          // Yuqori qismdagi tanlov paneli
           Positioned(
-            top: 5,
+            top: 0,
             left: 0,
             right: 0,
             child: SizedBox(
-              height: MediaQuery.of(context).size.height * 0.55,
+              height: MediaQuery.of(context).size.height * 0.56,
               child: Center(
                 child: Container(
-                  width: 316,
-                  height: 379,
+                  width: 350, // Konteyner enini kengaytirdik (oldingi 316)
+                  height: 350,
                   decoration: BoxDecoration(
-                    // Replace deprecated withOpacity with withAlpha
-                    color: AppColors.primaryColor.withAlpha(51), // ~20% opacity
+                    color: AppColors.primaryColor.withAlpha(51), // ~20% shaffoflik
                     borderRadius: BorderRadius.circular(44),
                   ),
                   padding: const EdgeInsets.all(24),
                   child: Column(
                     children: [
-                      // Title text
+                      // Sarlavha matni
                       const Text(
                         "Tadbirkorligingiz yo'nalishini ko'rsating",
                         style: TextStyle(
@@ -68,15 +66,16 @@ class EntrepreneurBusinessTypeScreen extends StatelessWidget {
                         ),
                         textAlign: TextAlign.center,
                       ),
-                      const SizedBox(height: 10),
+                      const SizedBox(height: 20),
                       
-                      // Business type buttons
+                      // Biznes turi tugmalari
                       Expanded(
                         child: GridView.count(
-                          crossAxisCount: 2,
-                          childAspectRatio: 2.5,
-                          mainAxisSpacing: 10,
-                          crossAxisSpacing: 10,
+                          crossAxisCount: 2, // 2 ustun
+                          childAspectRatio: 160/50, // Eni 170px, bo'yi 50px
+                          mainAxisSpacing: 12, // Vertikal oraliq
+                          crossAxisSpacing: 12, // Gorizontal oraliq
+                          padding: EdgeInsets.zero, // Qo'shimcha padding olib tashlandi
                           children: businessTypes.map((type) => 
                             BusinessTypeButton(
                               title: type,
@@ -110,7 +109,6 @@ class BusinessTypeButton extends StatelessWidget {
   final String title;
   final VoidCallback onPressed;
 
-  // Use super.key syntax
   const BusinessTypeButton({
     required this.title,
     required this.onPressed,
@@ -119,21 +117,29 @@ class BusinessTypeButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: onPressed,
-      style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
+    return SizedBox(
+      width: 170, // Aniq eni 170px
+      height: 50,  // Aniq bo'yi 50px
+      child: ElevatedButton(
+        onPressed: onPressed,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 4), // Matn sig'ishi uchun padding
         ),
-      ),
-      child: Text(
-        title,
-        style: TextStyle(
-          fontSize: 14,
-          color: AppColors.primaryColor,
+        child: Text(
+          title,
+          style: const TextStyle(
+            fontSize: 12, // Matn o'lchami kichraytirildi
+            color: AppColors.txtColor,
+            fontWeight: FontWeight.bold,
+          ),
+          textAlign: TextAlign.center,
+          maxLines: 1, // Faqat 1 qator
+          overflow: TextOverflow.ellipsis, // Sig'masa "..." ko'rinishida
         ),
-        textAlign: TextAlign.center,
       ),
     );
   }
