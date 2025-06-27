@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:m_taksi/core/theme/colors.dart';
-import 'package:m_taksi/views/auth/entrepreneur/entrepreneur_phone_screen.dart';
+import 'package:m_taksi/core/theme/colors.dart'; // Loyiha ranglari uchun kutubxona
+import 'package:m_taksi/views/auth/entrepreneur/entrepreneur_phone_screen.dart'; // Tadbirkor telefon raqami sahifasi
 
+/// Tadbirkorlik turini tanlash sahifasi
 class EntrepreneurBusinessTypeScreen extends StatelessWidget {
-  // Biznes turlari ro'yxati (const qiymat sifatida)
+  /// Biznes turlari ro'yxati (o'zgarmas qiymat)
   static const List<String> businessTypes = [
-    "Mahaliy taksi ",
+    "Mahaliy taksi",
     "Do'kondor",
     "Yuk tashuvchi Taksi",
     "Sartarosh",
@@ -15,15 +16,15 @@ class EntrepreneurBusinessTypeScreen extends StatelessWidget {
     "Xo'jalik molari",
   ];
 
-  const EntrepreneurBusinessTypeScreen({super.key});
+  const EntrepreneurBusinessTypeScreen({super.key}); // Konstruktor
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.white, // Oq fon rangi
       body: Stack(
         children: [
-          // Pastki qismdagi rasm (55% balandlikda)
+          // Pastki qismdagi fon rasmi (ekran balandligining 55%)
           Positioned(
             bottom: 0,
             left: 0,
@@ -31,9 +32,29 @@ class EntrepreneurBusinessTypeScreen extends StatelessWidget {
             child: SizedBox(
               height: MediaQuery.of(context).size.height * 0.55,
               child: Image.asset(
-                'assets/images/rasm8.png',
-                fit: BoxFit.cover,
-                width: double.infinity,
+                'assets/images/rasm8.png', // Rasm manbai
+                fit: BoxFit.cover, // Rasmni to'liq qoplash
+                width: double.infinity, // Kengligi to'liq
+              ),
+            ),
+          ),
+          
+          // Orqaga qaytish tugmasi
+          Positioned(
+            top: 40,
+            left: 20,
+            child: GestureDetector(
+              onTap: () => Navigator.pop(context), // Oldingi sahifaga qaytish
+              child: Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: AppColors.primaryColor.withAlpha(51), // Yarim shaffof oq fon
+                  shape: BoxShape.circle, // Doira shakli
+                ),
+                child: const Icon(
+                  Icons.arrow_back, // Orqaga ikonkasi
+                  color: Colors.black,
+                ),
               ),
             ),
           ),
@@ -47,13 +68,13 @@ class EntrepreneurBusinessTypeScreen extends StatelessWidget {
               height: MediaQuery.of(context).size.height * 0.56,
               child: Center(
                 child: Container(
-                  width: 350, // Konteyner enini kengaytirdik (oldingi 316)
-                  height: 350,
+                  width: 350, // Konteyner kengligi
+                  height: 350, // Konteyner balandligi
                   decoration: BoxDecoration(
-                    color: AppColors.primaryColor.withAlpha(51), // ~20% shaffoflik
-                    borderRadius: BorderRadius.circular(44),
+                    color: AppColors.primaryColor.withAlpha(51), // 20% shaffoflik
+                    borderRadius: BorderRadius.circular(44), // Yumaloq burchaklar
                   ),
-                  padding: const EdgeInsets.all(24),
+                  padding: const EdgeInsets.all(24), // Ichki joy
                   child: Column(
                     children: [
                       // Sarlavha matni
@@ -66,20 +87,21 @@ class EntrepreneurBusinessTypeScreen extends StatelessWidget {
                         ),
                         textAlign: TextAlign.center,
                       ),
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 20), // Bo'sh joy
                       
                       // Biznes turi tugmalari
                       Expanded(
                         child: GridView.count(
                           crossAxisCount: 2, // 2 ustun
-                          childAspectRatio: 160/50, // Eni 170px, bo'yi 50px
+                          childAspectRatio: 160/50, // Tugma nisbati (eni/bo'yi)
                           mainAxisSpacing: 12, // Vertikal oraliq
                           crossAxisSpacing: 12, // Gorizontal oraliq
-                          padding: EdgeInsets.zero, // Qo'shimcha padding olib tashlandi
+                          padding: EdgeInsets.zero, // Qo'shimcha joy qo'ymaslik
                           children: businessTypes.map((type) => 
                             BusinessTypeButton(
                               title: type,
                               onPressed: () {
+                                // "Mahaliy taksi" tugmasi bosilganda telefon raqam sahifasiga o'tish
                                 if (type == "Mahaliy taksi") {
                                   Navigator.push(
                                     context,
@@ -88,6 +110,7 @@ class EntrepreneurBusinessTypeScreen extends StatelessWidget {
                                     ),
                                   );
                                 }
+                                // Boshqa biznes turlari uchun ham shu logikani qo'shishingiz mumkin
                               },
                             ),
                           ).toList(),
@@ -105,40 +128,41 @@ class EntrepreneurBusinessTypeScreen extends StatelessWidget {
   }
 }
 
+/// Biznes turi tugmasi uchun maxsus widget
 class BusinessTypeButton extends StatelessWidget {
-  final String title;
-  final VoidCallback onPressed;
+  final String title; // Tugma matni
+  final VoidCallback onPressed; // Bosilganda bajariladigan funksiya
 
   const BusinessTypeButton({
     required this.title,
     required this.onPressed,
-    super.key,
+    super.key, // Widget kaliti
   });
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 170, // Aniq eni 170px
-      height: 50,  // Aniq bo'yi 50px
+      width: 170, // Aniq kenglik
+      height: 50, // Aniq balandlik
       child: ElevatedButton(
-        onPressed: onPressed,
+        onPressed: onPressed, // Bosilganda funksiya
         style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.white, // Oq fon
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(12), // Yumaloq burchaklar
           ),
-          padding: const EdgeInsets.symmetric(horizontal: 4), // Matn sig'ishi uchun padding
+          padding: const EdgeInsets.symmetric(horizontal: 4), // Ichki joy
         ),
         child: Text(
           title,
           style: const TextStyle(
-            fontSize: 12, // Matn o'lchami kichraytirildi
-            color: AppColors.txtColor,
-            fontWeight: FontWeight.bold,
+            fontSize: 12, // Matn o'lchami
+            color: AppColors.txtColor, // Matn rangi
+            fontWeight: FontWeight.bold, // Qalin matn
           ),
-          textAlign: TextAlign.center,
+          textAlign: TextAlign.center, // Markazga tekislash
           maxLines: 1, // Faqat 1 qator
-          overflow: TextOverflow.ellipsis, // Sig'masa "..." ko'rinishida
+          overflow: TextOverflow.ellipsis, // Matn sig'masidan "..." qo'yish
         ),
       ),
     );
