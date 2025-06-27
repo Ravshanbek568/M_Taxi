@@ -80,7 +80,7 @@ class EntrepreneurBusinessTypeScreen extends StatelessWidget {
                             BusinessTypeButton(
                               title: type,
                               onPressed: () {
-                                if (type == "Mahaliy taksi haydovchisi") {
+                                if (type == "Mahaliy taksi") {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
