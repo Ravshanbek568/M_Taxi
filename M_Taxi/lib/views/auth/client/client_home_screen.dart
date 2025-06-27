@@ -7,13 +7,24 @@ class ClientHomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFF8F9F9), // Scaffold orqa fon rangi
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(80),
         child: Container(
           margin: const EdgeInsets.symmetric(horizontal: 20),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: const Color(0xFFF8F9F9), // AppBar container fon rangi
             borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                // withOpacity o'rniga Color.fromRGBO yoki Color.fromARGB dan foydalaning
+                color: Color.fromRGBO(0, 0, 0, 0.05), // RGB + Opacity
+                // yoki: color: Color.fromARGB(13, 0, 0, 0), // Alpha = 13 (255 ning ~5%)
+                spreadRadius: 1,
+                blurRadius: 6,
+                offset: const Offset(0, 2),
+              ),
+            ],
           ),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -77,7 +88,15 @@ class ClientHomeScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: const Center(child: Text('Xush kelibsiz!')),
+      body: Container(
+        color: const Color(0xFFF8F9F9), // Body orqa fon rangi
+        child: const Center(
+          child: Text(
+            'Xush kelibsiz!',
+            style: TextStyle(fontSize: 20),
+          ),
+        ),
+      ),
     );
   }
 }
