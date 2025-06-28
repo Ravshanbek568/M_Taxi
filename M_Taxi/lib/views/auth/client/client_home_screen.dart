@@ -31,8 +31,8 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
             color: Colors.white, // AppBar fon rangi (oq)
             borderRadius: const BorderRadius.only(
               // Faqat YUQORI ikki burchakni yumaloqlash (talabga ko'ra o'zgartirildi)
-              topLeft: Radius.circular(24),
-              topRight: Radius.circular(24),
+              bottomLeft: Radius.circular(24),
+              bottomRight: Radius.circular(24),
             ),
             boxShadow: [
               BoxShadow(
@@ -150,6 +150,7 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
             showSelectedLabels: false, // Tanlangan labelni ko'rsatmaslik
             showUnselectedLabels: false, // Tanlanmagan labelni ko'rsatmaslik
             elevation: 10, // Soyaning balandligi
+            iconSize: 28,
             onTap: (index) {
               setState(() {
                 _selectedIndex = index; // Tanlangan indeksni yangilash
