@@ -13,7 +13,7 @@ class ClientHomeScreen extends StatelessWidget {
         child: Container(
           margin: const EdgeInsets.symmetric(horizontal: 20),
           decoration: BoxDecoration(
-            color: const Color(0xFFF8F9F9), // AppBar container fon rangi
+            color: const Color.fromARGB(255, 255, 255, 255), // AppBar container fon rangi
             borderRadius: BorderRadius.circular(20),
             boxShadow: [
               BoxShadow(
@@ -27,7 +27,7 @@ class ClientHomeScreen extends StatelessWidget {
             ],
           ),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),//ikkala yondagi tugmalar appp bardagi chetdan o'lchami
             child: AppBar(
               backgroundColor: Colors.transparent,
               elevation: 0,
