@@ -118,7 +118,7 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
               padding: const EdgeInsets.only(
                 left: 16,
                 right: 16,
-                top: 2, // AppBar pastidan 2px pastda
+                top: 12, // AppBar pastidan 2px pastda
                 bottom: 16,
               ),
               child: Column(
@@ -126,7 +126,7 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
                 children: [
                   // "Xizmat toifalari" yozuvi
                   const Padding(
-                    padding: EdgeInsets.only(bottom: 4), // Yozuvdan pastga 4px
+                    padding: EdgeInsets.only(bottom: 12), // Yozuvdan pastga 4px
                     child: Text(
                       'Xizmat toifalari',
                       style: TextStyle(
@@ -138,7 +138,7 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
                   
                   // Birinchi qator (4 ta xizmat)
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       _buildServiceItem(
                         icon: 'assets/icons/icon2.svg',
@@ -164,7 +164,7 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
                   
                   // Ikkinchi qator (4 ta xizmat)
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       _buildServiceItem(
                         icon: 'assets/icons/icon6.svg',
@@ -180,7 +180,7 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
                       ),
                       _buildServiceItem(
                         icon: 'assets/icons/icon9.svg',
-                        label: 'Sartaroshxona go\'zalik salo\'nlar',
+                        label: 'Yetkazib berish',
                       ),
                     ],
                   ),
@@ -277,8 +277,8 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
       children: [
         // Rectangel (64x60) yumaloqlangan burchaklari bilan
         Container(
-          width: 64,
-          height: 60,
+          width: 68,
+          height: 64,
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(10), // 10px yumaloqlik
