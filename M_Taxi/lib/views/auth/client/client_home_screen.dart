@@ -106,67 +106,69 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
     return Scaffold(
       backgroundColor: const Color(0xFFF8F9F9),
       
-      // AppBar - endi rangi o'zgarmaydi
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.menu, color: Colors.black, size: 32),
-          onPressed: () {},
-        ),
-        title: SizedBox(
-          width: MediaQuery.of(context).size.width * 0.8,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
+  backgroundColor:const Color(0xFFF8F9F9),
+  elevation: 0,
+  toolbarHeight: 80, // Optimal balandlik
+  leading: Padding(
+    padding: const EdgeInsets.only(left: 20), // Chap tomondan 16px bo'shliq
+    
+    child: IconButton(
+      icon: const Icon(Icons.menu, color: Colors.black, size: 32),
+      onPressed: () {},
+      padding: EdgeInsets.zero, // IconButton paddingini olib tashlash
+    ),
+  ),
+  title: Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+      Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Row(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Icon(Icons.location_on, size: 14, color: Colors.grey),
-                  const SizedBox(width: 4),
-                  Flexible(
-                    child: Text(
-                      'Toshkent shahri',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey[600],
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 2),
-              const Text(
-                'Alimov Abdulloh',
+              const Icon(Icons.location_on, size: 14, color: Colors.grey),
+              const SizedBox(width: 4),
+              Text(
+                'Toshkent shahri',
                 style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
+                  fontSize: 12,
+                  color: Colors.grey[600],
                 ),
-                overflow: TextOverflow.ellipsis,
               ),
             ],
           ),
-        ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(left: 8),
-            child: CircleAvatar(
-              radius: 30,
-              backgroundImage: NetworkImage('https://example.com/user-profile.jpg'),
-              backgroundColor: Colors.grey[300],
+          const SizedBox(height: 4),
+          const Text(
+            'Alimov Abdulloh',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
             ),
           ),
         ],
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(
-            bottom: Radius.circular(24),
-          ),
-        ),
       ),
-      
+    ],
+  ),
+  actions: [
+    Padding(
+      padding: const EdgeInsets.only(right: 18), // O'ng tomondan 16px bo'shliq
+      child: CircleAvatar(
+        radius: 28, // Radiusni kichikroq qilish
+        backgroundImage: NetworkImage('https://example.com/user-profile.jpg'),
+        backgroundColor: Colors.grey[300],
+      ),
+    ),
+  ],
+  shape: const RoundedRectangleBorder(
+    borderRadius: BorderRadius.vertical(
+      bottom: Radius.circular(28),
+    ),
+  ),
+),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -383,13 +385,13 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
       ? [
           [const Color(0xFF10F1FF), const Color(0xFF0139FE)], // ko'k gradient
           [const Color(0xFFA0D1FF), const Color(0xFF6CADFF)], // zangori gradient
-          [const Color(0xFF10F1FF), const Color(0xFF0139FE)], // ko'k gradient
+          [const Color(0xFF10F1FF), const Color(0xFF549554)], // ko'k gradient
           [const Color(0xFFFFF3B8), const Color(0xFFFFE500)], // sariq gradient
           [const Color(0xFF10F1FF), const Color(0xFF0139FE)], // ko'k gradient
         ]
       : [
           [const Color(0xFFFFA1A1), const Color(0xFFFB1313)], // qizil gradient
-          [const Color(0xFFA0D1FF), const Color(0xFF6CADFF)], // zangori gradient
+          [const Color(0xFFA0D1FF), const Color(0xFF0139FE)], // zangori gradient
           [const Color(0xFFE8B5B5), const Color(0xFFC37272)], // pushti gradient
           [const Color(0xFFA0D1FF), const Color(0xFF6CADFF)], // zangori gradient
           [const Color(0xFFA0D1A0), const Color(0xFF549554)], // yashil gradient
