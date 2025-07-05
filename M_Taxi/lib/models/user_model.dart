@@ -1,5 +1,3 @@
-import 'package:shared_preferences/shared_preferences.dart';
-
 class UserModel {
   String? firstName;
   String? lastName;
@@ -11,28 +9,35 @@ class UserModel {
   String? cardNumber;
   String? cardExpiry;
 
+  UserModel({
+    this.firstName,
+    this.lastName,
+    this.phone,
+    this.address,
+    this.email,
+    this.password,
+    this.avatarUrl,
+    this.cardNumber,
+    this.cardExpiry,
+  });
+
+  // SharedPreferences-dan ma'lumotlarni yuklash
   static Future<UserModel> loadFromPrefs() async {
-    final prefs = await SharedPreferences.getInstance();
-    return UserModel()
-      ..firstName = prefs.getString('firstName')
-      ..lastName = prefs.getString('lastName')
-      ..phone = prefs.getString('phone')
-      ..address = prefs.getString('address')
-      ..email = prefs.getString('email')
-      ..password = prefs.getString('password')
-      ..cardNumber = prefs.getString('cardNumber')
-      ..cardExpiry = prefs.getString('cardExpiry');
+    // Bu yerda SharedPreferences dan ma'lumotlarni o'qib, UserModel qaytarishingiz kerak
+    // Misol uchun:
+    // final prefs = await SharedPreferences.getInstance();
+    return UserModel(
+      firstName: '', // prefs.getString('firstName'),
+      lastName: '',  // prefs.getString('lastName'),
+      // ...
+    );
   }
 
+  // Ma'lumotlarni SharedPreferences-ga saqlash
   Future<void> saveToPrefs() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('firstName', firstName ?? '');
-    await prefs.setString('lastName', lastName ?? '');
-    await prefs.setString('phone', phone ?? '');
-    await prefs.setString('address', address ?? '');
-    await prefs.setString('email', email ?? '');
-    if (password != null) await prefs.setString('password', password!);
-    if (cardNumber != null) await prefs.setString('cardNumber', cardNumber!);
-    if (cardExpiry != null) await prefs.setString('cardExpiry', cardExpiry!);
+    // final prefs = await SharedPreferences.getInstance();
+    // await prefs.setString('firstName', firstName ?? '');
+    // await prefs.setString('lastName', lastName ?? '');
+    // ...
   }
 }

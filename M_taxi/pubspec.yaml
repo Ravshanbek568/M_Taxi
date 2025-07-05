@@ -17,7 +17,7 @@ dependencies:
   dio: ^5.3.2
   shared_preferences: ^2.2.2
   intl: ^0.18.1
-  image_picker: ^0.8.7+4
+  # image_picker: ^0.8.7+4
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -30,7 +30,7 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
-    - assets/default_avatar.png
+    # - assets/default_avatar.png
     # - assets/svgs/
 
   fonts:

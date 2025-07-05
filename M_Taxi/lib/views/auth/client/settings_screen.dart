@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:m_taxi/models/user_model.dart'; // Loyiha nomiga moslab o'zgartiring
+import 'package:m_taksi/models/user_model.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -10,7 +10,7 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   final _formKey = GlobalKey<FormState>();
-  late UserModel _user;
+  late UserModel _user; // To'g'ri e'lon qilindi
   bool _isLoading = true;
 
   @override
@@ -107,7 +107,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 : const AssetImage('assets/default_avatar.png') as ImageProvider,
           ),
           TextButton(
-            onPressed: () {}, // Rasmni o'zgartirish funksiyasi
+            onPressed: () {},
             child: const Text('Rasmni o\'zgartirish'),
           ),
         ],
