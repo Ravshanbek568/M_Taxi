@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
 
 class ClientHomeScreen extends StatefulWidget {
   const ClientHomeScreen({super.key});
@@ -12,6 +11,7 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
   int _selectedIndex = 0;
   final Color _selectedColor = Colors.blue;
   final Color _unselectedColor = Colors.grey[700]!;
+  bool _isScrolled = false;
 
   // Tavsiya qilingan haydovchilar ro'yxati
   final List<Map<String, dynamic>> _recommendations = [
@@ -105,85 +105,113 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF8F9F9),
-      
-      appBar: AppBar(
-  backgroundColor:const Color(0xFFF8F9F9),
-  elevation: 0,
-  toolbarHeight: 80, // Optimal balandlik
-  leading: Padding(
-    padding: const EdgeInsets.only(left: 20), // Chap tomondan 16px bo'shliq
-    
-    child: IconButton(
-      icon: const Icon(Icons.menu, color: Colors.black, size: 32),
-      onPressed: () {},
-      padding: EdgeInsets.zero, // IconButton paddingini olib tashlash
-    ),
-  ),
-  title: Row(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: [
-      Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Row(
-            mainAxisSize: MainAxisSize.min,
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(80),
+        child: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          flexibleSpace: AnimatedContainer(
+            duration: const Duration(milliseconds: 200),
+            decoration: BoxDecoration(
+              color: _isScrolled ? Colors.white : const Color(0xFFF8F9F9),
+              borderRadius: const BorderRadius.vertical(
+                bottom: Radius.circular(28),
+              ),
+              boxShadow: _isScrolled
+                  ? [
+                      BoxShadow(
+                        color: Color.fromRGBO(0, 0, 0, 0.1),
+                        spreadRadius: 0,
+                        blurRadius: 10,
+                        offset: const Offset(0, 4),
+                      ),
+                    ]
+                  : null,
+            ),
+          ),
+          toolbarHeight: 80,
+          leading: Padding(
+            padding: const EdgeInsets.only(left: 20),
+            child: IconButton(
+              icon: const Icon(Icons.menu, color: Colors.black, size: 32),
+              onPressed: () {},
+              padding: EdgeInsets.zero,
+            ),
+          ),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(Icons.location_on, size: 14, color: Colors.grey),
-              const SizedBox(width: 4),
-              Text(
-                'Toshkent shahri',
-                style: TextStyle(
-                  fontSize: 12,
-                  color: Colors.grey[600],
-                ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(Icons.location_on, size: 14, color: Colors.grey),
+                      const SizedBox(width: 4),
+                      Text(
+                        'Toshkent shahri',
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey[600],
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 4),
+                  const Text(
+                    'Alimov Abdulloh',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
-          const SizedBox(height: 4),
-          const Text(
-            'Alimov Abdulloh',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
+          actions: [
+            Padding(
+              padding: const EdgeInsets.only(right: 18),
+              child: CircleAvatar(
+                radius: 28,
+                backgroundImage: NetworkImage('https://example.com/user-profile.jpg'),
+                backgroundColor: Colors.grey[300],
+              ),
+            ),
+          ],
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(
+              bottom: Radius.circular(28),
             ),
           ),
-        ],
-      ),
-    ],
-  ),
-  actions: [
-    Padding(
-      padding: const EdgeInsets.only(right: 18), // O'ng tomondan 16px bo'shliq
-      child: CircleAvatar(
-        radius: 28, // Radiusni kichikroq qilish
-        backgroundImage: NetworkImage('https://example.com/user-profile.jpg'),
-        backgroundColor: Colors.grey[300],
-      ),
-    ),
-  ],
-  shape: const RoundedRectangleBorder(
-    borderRadius: BorderRadius.vertical(
-      bottom: Radius.circular(28),
-    ),
-  ),
-),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            // Xizmat toifalari bo'limi
-            _buildServiceCategories(),
-            
-            // Tavsiya qilingan haydovchilar bo'limi
-            _buildRecommendationsSection(),
-            
-            // Mashhur haydovchilar bo'limi
-            _buildPopularDriversSection(),
-          ],
         ),
       ),
-      
+      body: NotificationListener<ScrollNotification>(
+        onNotification: (notification) {
+          if (notification is ScrollUpdateNotification) {
+            final bool newState = notification.metrics.pixels > 0;
+            if (newState != _isScrolled) {
+              setState(() {
+                _isScrolled = newState;
+              });
+            }
+          }
+          return false;
+        },
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              const SizedBox(height: 20),
+              _buildServiceCategories(),
+              _buildRecommendationsSection(),
+              _buildPopularDriversSection(),
+            ],
+          ),
+        ),
+      ),
       bottomNavigationBar: _buildBottomNavigationBar(),
     );
   }
@@ -238,7 +266,7 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
           onTapUp: (_) => setState(() => isPressed = false),
           onTapCancel: () => setState(() => isPressed = false),
           onTap: () {
-            if (kDebugMode) debugPrint('$label tanlandi');
+             debugPrint('$label tanlandi');
           },
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 100),
@@ -289,78 +317,84 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
   }
 
   Widget _buildRecommendationsSection() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 10, left: 16, right: 16, bottom: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Padding(
-            padding: EdgeInsets.only(bottom: 12),
-            child: Text(
-              'Siz uchun tavsiyalar',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
+  return Padding(
+    padding: const EdgeInsets.only(top: 10, bottom: 10),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Padding(
+          padding: EdgeInsets.only(left: 16, bottom: 12),
+          child: Text(
+            'Siz uchun tavsiyalar',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(
-            height: 195,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: _recommendations.length,
-              itemBuilder: (context, index) {
-                return Container(
-                  width: 300,
-                  margin: EdgeInsets.only(
-                    right: index == _recommendations.length - 1 ? 0 : 16,
-                  ),
-                  child: _buildBusinessCard(_recommendations[index], index, isRecommendation: true),
-                );
-              },
-            ),
+        ),
+        SizedBox(
+          height: 195,
+          child: ListView.builder(
+            padding: EdgeInsets.zero,
+            scrollDirection: Axis.horizontal,
+            physics: const BouncingScrollPhysics(),
+            itemCount: _recommendations.length,
+            itemBuilder: (context, index) {
+              return Container(
+                width: MediaQuery.of(context).size.width * 0.85,
+                margin: EdgeInsets.only(
+                  left: index == 0 ? 16 : 8,
+                  right: index == _recommendations.length - 1 ? 16 : 8,
+                ),
+                child: _buildBusinessCard(_recommendations[index], index, isRecommendation: true),
+              );
+            },
           ),
-        ],
-      ),
-    );
-  }
+        ),
+      ],
+    ),
+  );
+}
 
-  Widget _buildPopularDriversSection() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 10, left: 16, right: 16, bottom: 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Padding(
-            padding: EdgeInsets.only(bottom: 12),
-            child: Text(
-              'Hozir mashhurlar',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
+Widget _buildPopularDriversSection() {
+  return Padding(
+    padding: const EdgeInsets.only(top: 10, bottom: 20), // Faqat bottom padding qoldirdik
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Padding(
+          padding: EdgeInsets.only(left: 16, bottom: 12), // Chapdan padding qo'shdik
+          child: Text(
+            'Hozir mashhurlar',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(
-            height: 195,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: _popularDrivers.length,
-              itemBuilder: (context, index) {
-                return Container(
-                  width: 300,
-                  margin: EdgeInsets.only(
-                    right: index == _popularDrivers.length - 1 ? 0 : 16,
-                  ),
-                  child: _buildBusinessCard(_popularDrivers[index], index, isRecommendation: false),
-                );
-              },
-            ),
+        ),
+        SizedBox(
+          height: 195,
+          child: ListView.builder(
+            padding: EdgeInsets.zero,
+            scrollDirection: Axis.horizontal,
+            physics: const BouncingScrollPhysics(),
+            itemCount: _popularDrivers.length,
+            itemBuilder: (context, index) {
+              return Container(
+                width: MediaQuery.of(context).size.width * 0.85, // Xuddi shu o'lcham
+                margin: EdgeInsets.only(
+                  left: index == 0 ? 16 : 8, // Birinchi element chapdan 16px
+                  right: index == _popularDrivers.length - 1 ? 16 : 8, // Oxirgi element o'ngdan 16px
+                ),
+                child: _buildBusinessCard(_popularDrivers[index], index, isRecommendation: false),
+              );
+            },
           ),
-        ],
-      ),
-    );
-  }
+        ),
+      ],
+    ),
+  );
+}
 
   Widget _buildBusinessCard(Map<String, dynamic> recommendation, int index, {bool isRecommendation = true}) {
     // Ranglar ro'yxati
