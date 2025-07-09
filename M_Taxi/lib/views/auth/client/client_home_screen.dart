@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:m_taksi/views/auth/client/settings_screen.dart';
 class ClientHomeScreen extends StatefulWidget {
   const ClientHomeScreen({super.key});
 
@@ -129,12 +129,15 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
                   : null,
             ),
           ),
-          toolbarHeight: 80,
+          toolbarHeight: 70,
           leading: Padding(
             padding: const EdgeInsets.only(left: 20),
             child: IconButton(
               icon: const Icon(Icons.menu, color: Colors.black, size: 32),
-              onPressed: () {},
+              onPressed: () {
+        // Faqat shu qatorni qo'shing:
+        Navigator.push(context, MaterialPageRoute(builder: (context) => const SettingsScreen()));
+              },
               padding: EdgeInsets.zero,
             ),
           ),
