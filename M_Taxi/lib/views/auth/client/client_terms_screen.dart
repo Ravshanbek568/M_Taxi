@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:m_taksi/core/theme/colors.dart';
-import 'package:m_taksi/views/auth/client/client_home_screen.dart';
+import 'package:m_taksi/views/auth/client/main_navigation/main_navigation.dart'; // Yangi import
 
-/// Mijozlar uchun foydalanish shartlari ekrani
-/// 
-/// Bu ekran mijozlarga ilova shartlarini ko'rsatadi va ularni qabul qilishni so'raydi.
 class ClientTermsScreen extends StatefulWidget {
   const ClientTermsScreen({super.key});
 
@@ -17,21 +14,18 @@ class _ClientTermsScreenState extends State<ClientTermsScreen> {
   bool _privacyAccepted = false;
   bool _locationEnabled = false;
 
-  /// Orqaga qaytish funksiyasi
   void _goBack() {
     Navigator.pop(context);
   }
 
-  /// Asosiy ekranga o'tish funksiyasi
   void _navigateToHome() {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => const ClientHomeScreen(),
+        builder: (context) => const MainNavigationScreen(), // Asosiy navigatsiyaga o'tish
       ),
     );
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -50,14 +44,12 @@ class _ClientTermsScreenState extends State<ClientTermsScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Ilova logotipi
               Image.asset(
                 'assets/images/rasm7.png',
                 width: 386,
                 height: 220,
               ),
               
-              // Sarlavha
               const SizedBox(height: 15),
               const Text(
                 "Ilova shartlarini qabul qilasizmi?",
@@ -68,7 +60,6 @@ class _ClientTermsScreenState extends State<ClientTermsScreen> {
                 ),
               ),
               
-              // Shartlar ro'yxati
               const SizedBox(height: 15),
               Container(
                 width: 340,
@@ -100,7 +91,6 @@ class _ClientTermsScreenState extends State<ClientTermsScreen> {
                 ),
               ),
               
-              // Tasdiqlash tugmasi
               const SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 35),
@@ -132,11 +122,9 @@ class _ClientTermsScreenState extends State<ClientTermsScreen> {
     );
   }
 
-  /// Shartlar checkbox elementini yaratish
   Widget _buildTermItem(String text, bool value, Function(bool) onChanged) {
     return Row(
       children: [
-        // Maxsus checkbox
         GestureDetector(
           onTap: () => onChanged(!value),
           child: Container(
@@ -153,7 +141,6 @@ class _ClientTermsScreenState extends State<ClientTermsScreen> {
           ),
         ),
         
-        // Matn
         const SizedBox(width: 15),
         Expanded(
           child: Text(

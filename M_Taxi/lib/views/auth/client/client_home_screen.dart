@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:m_taksi/views/auth/client/settings_screen.dart';
+
 class ClientHomeScreen extends StatefulWidget {
   const ClientHomeScreen({super.key});
 
@@ -8,9 +9,6 @@ class ClientHomeScreen extends StatefulWidget {
 }
 
 class _ClientHomeScreenState extends State<ClientHomeScreen> {
-  int _selectedIndex = 0;
-  final Color _selectedColor = Colors.blue;
-  final Color _unselectedColor = Colors.grey[700]!;
   bool _isScrolled = false;
 
   // Tavsiya qilingan haydovchilar ro'yxati
@@ -135,8 +133,8 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
             child: IconButton(
               icon: const Icon(Icons.menu, color: Colors.black, size: 32),
               onPressed: () {
-        // Faqat shu qatorni qo'shing:
-        Navigator.push(context, MaterialPageRoute(builder: (context) => const SettingsScreen()));
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => const SettingsScreen()));
               },
               padding: EdgeInsets.zero,
             ),
@@ -215,7 +213,6 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: _buildBottomNavigationBar(),
     );
   }
 
@@ -320,118 +317,116 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
   }
 
   Widget _buildRecommendationsSection() {
-  return Padding(
-    padding: const EdgeInsets.only(top: 10, bottom: 10),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Padding(
-          padding: EdgeInsets.only(left: 16, bottom: 12),
-          child: Text(
-            'Siz uchun tavsiyalar',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
+    return Padding(
+      padding: const EdgeInsets.only(top: 10, bottom: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Padding(
+            padding: EdgeInsets.only(left: 16, bottom: 12),
+            child: Text(
+              'Siz uchun tavsiyalar',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
-        ),
-        SizedBox(
-          height: 195,
-          child: ListView.builder(
-            padding: EdgeInsets.zero,
-            scrollDirection: Axis.horizontal,
-            physics: const BouncingScrollPhysics(),
-            itemCount: _recommendations.length,
-            itemBuilder: (context, index) {
-              return Container(
-                width: MediaQuery.of(context).size.width * 0.85,
-                margin: EdgeInsets.only(
-                  left: index == 0 ? 16 : 8,
-                  right: index == _recommendations.length - 1 ? 16 : 8,
-                ),
-                child: _buildBusinessCard(_recommendations[index], index, isRecommendation: true),
-              );
-            },
+          SizedBox(
+            height: 195,
+            child: ListView.builder(
+              padding: EdgeInsets.zero,
+              scrollDirection: Axis.horizontal,
+              physics: const BouncingScrollPhysics(),
+              itemCount: _recommendations.length,
+              itemBuilder: (context, index) {
+                return Container(
+                  width: MediaQuery.of(context).size.width * 0.85,
+                  margin: EdgeInsets.only(
+                    left: index == 0 ? 16 : 8,
+                    right: index == _recommendations.length - 1 ? 16 : 8,
+                  ),
+                  child: _buildBusinessCard(_recommendations[index], index, isRecommendation: true),
+                );
+              },
+            ),
           ),
-        ),
-      ],
-    ),
-  );
-}
+        ],
+      ),
+    );
+  }
 
-Widget _buildPopularDriversSection() {
-  return Padding(
-    padding: const EdgeInsets.only(top: 10, bottom: 20), // Faqat bottom padding qoldirdik
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Padding(
-          padding: EdgeInsets.only(left: 16, bottom: 12), // Chapdan padding qo'shdik
-          child: Text(
-            'Hozir mashhurlar',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
+  Widget _buildPopularDriversSection() {
+    return Padding(
+      padding: const EdgeInsets.only(top: 10, bottom: 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Padding(
+            padding: EdgeInsets.only(left: 16, bottom: 12),
+            child: Text(
+              'Hozir mashhurlar',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
-        ),
-        SizedBox(
-          height: 195,
-          child: ListView.builder(
-            padding: EdgeInsets.zero,
-            scrollDirection: Axis.horizontal,
-            physics: const BouncingScrollPhysics(),
-            itemCount: _popularDrivers.length,
-            itemBuilder: (context, index) {
-              return Container(
-                width: MediaQuery.of(context).size.width * 0.85, // Xuddi shu o'lcham
-                margin: EdgeInsets.only(
-                  left: index == 0 ? 16 : 8, // Birinchi element chapdan 16px
-                  right: index == _popularDrivers.length - 1 ? 16 : 8, // Oxirgi element o'ngdan 16px
-                ),
-                child: _buildBusinessCard(_popularDrivers[index], index, isRecommendation: false),
-              );
-            },
+          SizedBox(
+            height: 195,
+            child: ListView.builder(
+              padding: EdgeInsets.zero,
+              scrollDirection: Axis.horizontal,
+              physics: const BouncingScrollPhysics(),
+              itemCount: _popularDrivers.length,
+              itemBuilder: (context, index) {
+                return Container(
+                  width: MediaQuery.of(context).size.width * 0.85,
+                  margin: EdgeInsets.only(
+                    left: index == 0 ? 16 : 8,
+                    right: index == _popularDrivers.length - 1 ? 16 : 8,
+                  ),
+                  child: _buildBusinessCard(_popularDrivers[index], index, isRecommendation: false),
+                );
+              },
+            ),
           ),
-        ),
-      ],
-    ),
-  );
-}
+        ],
+      ),
+    );
+  }
 
   Widget _buildBusinessCard(Map<String, dynamic> recommendation, int index, {bool isRecommendation = true}) {
-    // Ranglar ro'yxati
     final colors = isRecommendation 
       ? [
-          const Color(0xFF0062FF), // ko'k
-          const Color(0xFF6CADFF), // zangori
-          const Color(0xFF0062FF), // ko'k
-          const Color(0xFFFFE500), // sariq
-          const Color(0xFF0062FF), // ko'k
+          const Color(0xFF0062FF),
+          const Color(0xFF6CADFF),
+          const Color(0xFF0062FF),
+          const Color(0xFFFFE500),
+          const Color(0xFF0062FF),
         ]
       : [
-          const Color(0xFFFB1313), // qizil
-          const Color(0xFF6CADFF), // zangori
-          const Color(0xFFC37272), // pushti
-          const Color(0xFF6CADFF), // zangori
-          const Color(0xFF549554), // yashil
+          const Color(0xFFFB1313),
+          const Color(0xFF6CADFF),
+          const Color(0xFFC37272),
+          const Color(0xFF6CADFF),
+          const Color(0xFF549554),
         ];
 
-    // Gradientlar ro'yxati
     final gradientColors = isRecommendation
       ? [
-          [const Color(0xFF10F1FF), const Color(0xFF0139FE)], // ko'k gradient
-          [const Color(0xFFA0D1FF), const Color(0xFF6CADFF)], // zangori gradient
-          [const Color(0xFF10F1FF), const Color(0xFF549554)], // ko'k gradient
-          [const Color(0xFFFFF3B8), const Color(0xFFFFE500)], // sariq gradient
-          [const Color(0xFF10F1FF), const Color(0xFF0139FE)], // ko'k gradient
+          [const Color(0xFF10F1FF), const Color(0xFF0139FE)],
+          [const Color(0xFFA0D1FF), const Color(0xFF6CADFF)],
+          [const Color(0xFF10F1FF), const Color(0xFF549554)],
+          [const Color(0xFFFFF3B8), const Color(0xFFFFE500)],
+          [const Color(0xFF10F1FF), const Color(0xFF0139FE)],
         ]
       : [
-          [const Color(0xFFFFA1A1), const Color(0xFFFB1313)], // qizil gradient
-          [const Color(0xFFA0D1FF), const Color(0xFF0139FE)], // zangori gradient
-          [const Color(0xFFE8B5B5), const Color(0xFFC37272)], // pushti gradient
-          [const Color(0xFFA0D1FF), const Color(0xFF6CADFF)], // zangori gradient
-          [const Color(0xFFA0D1A0), const Color(0xFF549554)], // yashil gradient
+          [const Color(0xFFFFA1A1), const Color(0xFFFB1313)],
+          [const Color(0xFFA0D1FF), const Color(0xFF0139FE)],
+          [const Color(0xFFE8B5B5), const Color(0xFFC37272)],
+          [const Color(0xFFA0D1FF), const Color(0xFF6CADFF)],
+          [const Color(0xFFA0D1A0), const Color(0xFF549554)],
         ];
 
     return Container(
@@ -450,7 +445,6 @@ Widget _buildPopularDriversSection() {
       ),
       child: Stack(
         children: [
-          // Diagonal gradient fon
           Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
@@ -461,8 +455,6 @@ Widget _buildPopularDriversSection() {
               ),
             ),
           ),
-
-          // Geometrik shakllar
           Positioned(
             left: -30,
             top: -30,
@@ -475,7 +467,6 @@ Widget _buildPopularDriversSection() {
               ),
             ),
           ),
-          
           Positioned(
             right: -20,
             bottom: -20,
@@ -491,14 +482,11 @@ Widget _buildPopularDriversSection() {
               ),
             ),
           ),
-          
-          // Asosiy kontent
           Padding(
             padding: const EdgeInsets.all(20),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Avatar va reyting
                 Column(
                   children: [
                     Container(
@@ -532,10 +520,7 @@ Widget _buildPopularDriversSection() {
                     ),
                   ],
                 ),
-                
                 const SizedBox(width: 20),
-                
-                // Ma'lumotlar
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -548,9 +533,7 @@ Widget _buildPopularDriversSection() {
                           color: Colors.white,
                         ),
                       ),
-                      
                       const SizedBox(height: 5),
-                      
                       Text(
                         recommendation['service'],
                         style: const TextStyle(
@@ -559,9 +542,7 @@ Widget _buildPopularDriversSection() {
                           fontWeight: FontWeight.w500,
                         ),
                       ),
-                      
                       const SizedBox(height: 8),
-                      
                       Text(
                         recommendation['days'],
                         style: const TextStyle(
@@ -569,7 +550,6 @@ Widget _buildPopularDriversSection() {
                           color: Colors.white,
                         ),
                       ),
-                      
                       Text(
                         recommendation['hours'],
                         style: const TextStyle(
@@ -583,8 +563,6 @@ Widget _buildPopularDriversSection() {
               ],
             ),
           ),
-          
-          // Murojat qilish tugmasi
           Positioned(
             bottom: 15,
             right: 15,
@@ -614,49 +592,6 @@ Widget _buildPopularDriversSection() {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildBottomNavigationBar() {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(24),
-          topRight: Radius.circular(24),
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: const Color.fromRGBO(0, 0, 0, 25).withAlpha(25),
-            spreadRadius: 0,
-            blurRadius: 10,
-            offset: const Offset(0, -5),
-          ),
-        ],
-      ),
-      child: ClipRRect(
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(24),
-          topRight: Radius.circular(24),
-        ),
-        child: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          currentIndex: _selectedIndex,
-          selectedItemColor: _selectedColor,
-          unselectedItemColor: _unselectedColor,
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
-          elevation: 10,
-          iconSize: 28,
-          onTap: (index) => setState(() => _selectedIndex = index),
-          items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Uy'),
-            BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Qidiruv'),
-            BottomNavigationBarItem(icon: Icon(Icons.message), label: 'Xabarlar'),
-            BottomNavigationBarItem(icon: Icon(Icons.notifications), label: 'Bildirishnomalar'),
-            BottomNavigationBarItem(icon: Icon(Icons.star), label: 'Tanlanganlar'),
-          ],
-        ),
       ),
     );
   }
