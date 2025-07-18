@@ -16,10 +16,11 @@ dependencies:
   provider: ^6.1.1
   dio: ^5.3.2
   shared_preferences: ^2.2.2
-  intl: ^0.18.1
+  intl: ^0.20.2
   logger: ^1.4.0
-  google_maps_flutter: ^2.12.3
+  # google_maps_flutter: ^2.12.3
   # image_picker: ^0.8.7+4
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -53,16 +54,16 @@ flutter:
         - asset: assets/fonts/Hauora-ExtraBold.ttf
           weight: 800
 
-# Platformaga xos konfiguratsiyalar (flutter bo'limidan tashqarida)
-android:
-  package: com.example.m_taksi
-  versionCode: 1
-  versionName: "1.0.0"
-  compileSdkVersion: 34
-  minSdkVersion: 21
-  targetSdkVersion: 34
+# # Platformaga xos konfiguratsiyalar (flutter bo'limidan tashqarida)
+# android:
+#   package: com.example.m_taksi
+#   versionCode: 1
+#   versionName: "1.0.0"
+#   compileSdkVersion: 34
+#   minSdkVersion: 21
+#   targetSdkVersion: 34
 
-ios:
-  bundleIdentifier: com.example.mTaksi
-  minimumOsVersion: "13.0"
-  usesSwift: true
+# ios:
+#   bundleIdentifier: com.example.mTaksi
+#   minimumOsVersion: "13.0"
+#   usesSwift: true
